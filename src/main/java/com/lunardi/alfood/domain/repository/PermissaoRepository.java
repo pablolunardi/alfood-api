@@ -1,0 +1,17 @@
+package com.lunardi.alfood.domain.repository;
+
+import java.util.List;
+
+import com.lunardi.alfood.domain.model.Permissao;
+
+public interface PermissaoRepository {
+	
+	List<Permissao> listar();
+
+	Permissao buscar(Long id);
+
+	Permissao salvar(Permissao permissao);
+
+	void remover(Permissao permissao);
+
+}
