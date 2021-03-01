@@ -12,6 +12,6 @@ public interface RestauranteRepository {
 	
 	Restaurante buscar(Long id);
 	
-	void remover(Restaurante restaurante);
+	void remover(Long restauranteId);
 	
 }
