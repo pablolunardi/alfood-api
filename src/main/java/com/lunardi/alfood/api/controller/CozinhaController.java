@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lunardi.alfood.api.model.CozinhasXmlWrapper;
+import com.lunardi.alfood.domain.exception.EntidadeEmUsoException;
+import com.lunardi.alfood.domain.exception.EntidadeNaoEncontradaException;
 import com.lunardi.alfood.domain.model.Cozinha;
 import com.lunardi.alfood.domain.repository.CozinhaRepository;
+import com.lunardi.alfood.domain.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping("/cozinhas")
@@ -27,6 +30,9 @@ public class CozinhaController {
 	
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
+	
+	@Autowired
+	private CadastroCozinhaService cadastroCozinha;
 	
 	@GetMapping
 	public List<Cozinha> listar() {
@@ -52,8 +58,7 @@ public class CozinhaController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public Cozinha adicionar(@RequestBody Cozinha cozinha) {
-		
-		return cozinhaRepository.salvar(cozinha);
+		return cadastroCozinha.salvar(cozinha);
 	}
 	
 	@PutMapping("/{cozinhaId}")
@@ -73,15 +78,15 @@ public class CozinhaController {
 	
 	@DeleteMapping("/{cozinhaId}")
 	public ResponseEntity<Void> remover(@PathVariable Long cozinhaId) {
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
-		
-		if (cozinha == null) {
+		try {
+			cadastroCozinha.excluir(cozinhaId);
+			
+			return ResponseEntity.noContent().build();
+		} catch (EntidadeEmUsoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		} catch (EntidadeNaoEncontradaException e){
 			return ResponseEntity.notFound().build();
 		}
-		
-		cozinhaRepository.remover(cozinha);
-		
-		return ResponseEntity.noContent().build();
 	}
 
 }
