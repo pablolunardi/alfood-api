@@ -11,30 +11,30 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lunardi.alfood.domain.model.Permissao;
 import com.lunardi.alfood.domain.repository.PermissaoRepository;
 
-@Component
-public class PermissaoRepositoryImpl implements PermissaoRepository {
+//@Component
+public class PermissaoRepositoryImpl  {
 
 	@PersistenceContext
 	private EntityManager manager;
 
-	@Override
+	//@Override
 	public List<Permissao> listar() {
 		return manager.createQuery("from Permissao", Permissao.class).getResultList();
 	}
 
-	@Override
+	//@Override
 	public Permissao buscar(Long id) {
 		return manager.find(Permissao.class, id);
 	}
 
 	@Transactional
-	@Override
+	//@Override
 	public Permissao salvar(Permissao permissao) {
 		return manager.merge(permissao);
 	}
 
 	@Transactional
-	@Override
+	//@Override
 	public void remover(Permissao permissao) {
 		permissao = buscar(permissao.getId());
 		manager.remove(permissao);

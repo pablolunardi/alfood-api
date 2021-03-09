@@ -12,30 +12,30 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lunardi.alfood.domain.model.Restaurante;
 import com.lunardi.alfood.domain.repository.RestauranteRepository;
 
-@Component
-public class RestauranteRepositoryImpl implements RestauranteRepository {
+//@Component
+public class RestauranteRepositoryImpl   {
 
 	@PersistenceContext
 	EntityManager manager;
 	
-	@Override
+	//@Override
 	public List<Restaurante> listar() {
 		return manager.createQuery("from Restaurante", Restaurante.class).getResultList();
 	}
 
 	@Transactional
-	@Override
+	//@Override
 	public Restaurante salvar(Restaurante restaurante) {
 		return manager.merge(restaurante);
 	}
 
-	@Override
+	//@Override
 	public Restaurante buscar(Long id) {
 		return manager.find(Restaurante.class, id);
 	}
 
 	@Transactional
-	@Override
+	//@Override
 	public void remover(Long restauranteId) {
 		Restaurante restaurante = buscar(restauranteId);
 		
