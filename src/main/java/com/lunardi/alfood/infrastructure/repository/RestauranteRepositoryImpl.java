@@ -1,5 +1,8 @@
 package com.lunardi.alfood.infrastructure.repository;
 
+import static com.lunardi.alfood.infrastructure.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.lunardi.alfood.infrastructure.repository.spec.RestauranteSpecs.comNomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +15,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.lunardi.alfood.domain.model.Restaurante;
+import com.lunardi.alfood.domain.repository.RestauranteRepository;
 import com.lunardi.alfood.domain.repository.RestauranteRepositoryQueries;
 
 @Repository
@@ -25,6 +31,9 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
 	@PersistenceContext
 	EntityManager manager;
+	
+	@Autowired @Lazy
+	private RestauranteRepository restauranteRepository;
 	
 	//@Override
 	public List<Restaurante> listar() {
@@ -107,6 +116,11 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 		
 		TypedQuery<Restaurante> query = manager.createQuery(criteria);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<Restaurante> findComFreteGratis(String nome) {
+		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 	}
 
 }
