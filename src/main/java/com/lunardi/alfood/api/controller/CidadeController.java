@@ -65,17 +65,16 @@ public class CidadeController {
 	public ResponseEntity<Cidade> atualizar(@PathVariable Long cidadeId,
 			@RequestBody Cidade cidade) {
 		try {
-			Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
+			Cidade cidadeAtual = cidadeRepository.findById(cidadeId).orElse(null);
 			
-			if (cidadeAtual.isPresent()) {
+			if (cidadeAtual != null) {
 				BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 				
-				Cidade cidadeSalva = cadastroCidade.salvar(cidadeAtual.get());
-				return ResponseEntity.ok(cidadeSalva);
+				cidadeAtual = cadastroCidade.salvar(cidadeAtual);
+				return ResponseEntity.ok(cidadeAtual);
 			}
-			
-			return ResponseEntity.notFound().build();
 		
+			return ResponseEntity.notFound().build();
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.badRequest().build();
 		}
