@@ -34,11 +34,6 @@ public class CozinhaController {
 		return cozinhaRepository.findAll();
 	}
 	
-//	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE )
-//	public CozinhasXmlWrapper listarXml() {
-//		return new CozinhasXmlWrapper(cozinhaRepository.findAll());
-//	}
-	
 	@GetMapping("/{cozinhaId}")
 	public Cozinha buscar(@PathVariable Long cozinhaId) {
 		return cadastroCozinha.buscarOuFalhar(cozinhaId);
