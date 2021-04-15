@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lunardi.alfood.domain.exception.CozinhaNaoEncontradaException;
-import com.lunardi.alfood.domain.exception.EntidadeNaoEncontradaException;
 import com.lunardi.alfood.domain.exception.NegocioException;
 import com.lunardi.alfood.domain.model.Restaurante;
 import com.lunardi.alfood.domain.repository.RestauranteRepository;

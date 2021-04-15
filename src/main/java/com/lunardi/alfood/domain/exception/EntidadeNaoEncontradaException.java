@@ -1,6 +1,6 @@
 package com.lunardi.alfood.domain.exception;
 
-public class EntidadeNaoEncontradaException extends RuntimeException {
+public class EntidadeNaoEncontradaException extends NegocioException {
 
 	private static final long serialVersionUID = 1L;
 	
